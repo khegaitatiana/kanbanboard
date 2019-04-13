@@ -1,18 +1,17 @@
 <?php
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 use Utilities\Utilities;
 use KanbanBoard\Authentication;
 use KanbanBoard\Github;
 use KanbanBoard\Application;
 
-#TODO move to .env
-include 'credentials.php';
-putenv("GH_CLIENT_ID=" . $GH_CLIENT_ID);
-putenv("GH_CLIENT_SECRET=" . $GH_CLIENT_SECRET);
-putenv("GH_ACCOUNT=" . $GH_ACCOUNT);
-putenv("GH_REPOSITORIES=" . $GH_REPOSITORIES);
+if(file_exists("config.php"))
+{
+    require_once("config.php"); // Load parameters for run
+}
+require_once ROOT. 'vendor/autoload.php';
+
+Utilities::loadEnvVariables();
 
 $repositories = explode('|', Utilities::env('GH_REPOSITORIES'));
 $authentication = new Authentication();

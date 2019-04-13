@@ -2,32 +2,47 @@
 
 namespace Utilities;
 
+use Dotenv\Dotenv;
+
 class Utilities
 {
-    private function __construct()
-    {
-    }
-
-    public static function env($name, $default = NULL)
+    /**
+     * @param string $name
+     * @param null $default
+     * @return string
+     * @throws \Exception
+     */
+    public static function env(string $name, $default = NULL): string
     {
         $value = getenv($name);
-        if ($default !== NULL) {
-            if (!empty($value))
-                return $value;
+        if (!empty($value)) {
+            return $value;
+        } elseif (!is_null($default)) {
             return $default;
+        } else {
+            throw new \Exception('Environment variable ' . $name . ' not found or has no value');
         }
-        return (empty($value) && $default === NULL) ? die('Environment variable ' . $name . ' not found or has no value') : $value;
     }
 
-    public static function hasValue($array, $key)
+    /**
+     * @param array $array
+     * @param string $key
+     * @return bool
+     */
+    public static function hasValue(array $array, string $key): bool
     {
         return is_array($array) && array_key_exists($key, $array) && !empty($array[$key]);
     }
 
-    public static function dump($data)
+    /**
+     * Load environment variables
+     */
+    public static function loadEnvVariables()
     {
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
+        $envFile = ROOT . '.env';
+        if (file_exists($envFile)) {
+            $dotenv = Dotenv::create(ROOT);
+            $dotenv->load();
+        }
     }
 }
