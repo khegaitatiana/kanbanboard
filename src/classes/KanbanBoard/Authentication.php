@@ -20,11 +20,8 @@ class Authentication
         $this->client_id = Utilities::env('GH_CLIENT_ID');
         $this->client_secret = Utilities::env('GH_CLIENT_SECRET');
     }
-
-    /**
-     * @return string
-     */
-    public function getToken(): string
+    
+    public function getToken()
     {
         session_start();
         if (!Utilities::hasValue($_SESSION, 'gh-token'))
