@@ -10,11 +10,13 @@ use \Michelf\Markdown;
 class Application
 {
 
-    const STATUS_ACTIVE    = "active";
-    const STATUS_QUEUED    = "queued";
-    const STATUS_PAUSED    = "paused";
-    const STATUS_COMPLETED = "completed";
-    const STATUS_CLOSED    = "closed";
+    const STATUS_ACTIVE    = 'active';
+    const STATUS_QUEUED    = 'queued';
+    const STATUS_PAUSED    = 'paused';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CLOSED    = 'closed';
+
+    const LABEL_WAITING_FOR_FEEDBACK = 'waiting-for-feedback';
 
     private $github;
     private $repositories;
@@ -32,7 +34,7 @@ class Application
         try
         {
             $authentication = new Authentication();
-            $token = $authentication->login();
+            $token = $authentication->getToken();
             $this->github = new Github($token, Utilities::env('GH_ACCOUNT'));
             $this->repositories = explode('|', Utilities::env('GH_REPOSITORIES'));
             $this->paused_labels = $paused_labels;
@@ -95,7 +97,7 @@ class Application
 
         usort($milestones, function($a, $b)
         {
-            return strcmp($a["milestone"], $b["milestone"]);
+            return strcmp($a['milestone'], $b['milestone']);
         });
 
         return $milestones;
