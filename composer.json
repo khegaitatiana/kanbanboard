@@ -1,8 +1,10 @@
 {
 	"autoload": {
-		"classmap": [
-			"src/classes"
-		]
+		"psr-4":
+		{
+			"KanbanBoard\\" : "src/classes/KanbanBoard",
+			"Utilities\\" : "src/classes/Utilities"
+		}
 	},
 	"require": {
 		"mustache/mustache": "^2.9",
