@@ -1,4 +1,4 @@
 .idea/
 composer.phar
 vendor/
-src/public/credentials.php
+.env
