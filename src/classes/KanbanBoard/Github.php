@@ -23,7 +23,7 @@ class Github
     {
         $this->account = $account;
         $this->client = new Client(new CachedHttpClient(array('cache_dir' => self::CACHE_DIR)));
-        $this->client->authenticate($token, Client::AUTH_HTTP_TOKEN);
+        $this->client->authenticate($token, Client::AUTH_HTTP_TOKEN, Client::AUTH_URL_CLIENT_ID);
         $this->milestone_api = $this->client->api('issues')->milestones();
     }
 
